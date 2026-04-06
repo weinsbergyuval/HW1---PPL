@@ -1,0 +1,15 @@
+(define last-item
+  (λ (lst)
+    'todo))
+
+(define remove-last-item
+  (λ (lst)
+    'todo))
+
+(define rotate-nth
+  (λ (lst n)
+   'todo))
+
+(define deep-reverse
+  (λ (l)
+    'todo))
