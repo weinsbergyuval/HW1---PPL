@@ -8,7 +8,13 @@ const findOrThrow = <T>(pred: (x: T) => boolean, a: T[]): T => {
     throw "No element found.";
 }
 
-export const findResult = <T>(pred: (x: T) => boolean, a: T[]): Result<T> => undefined as any;
+/* Question 3.1 */
+export const findResult = <T>(pred: (x: T) => boolean, a: T[]): Result<T> => {
+    // YA - find an element that receive true for the pred(func)
+    const found = a.find(pred);
+    // YA - if exist return Result makeOk, else return Result makeFailure with msg
+    return found !== undefined ? makeOk(found) : makeFailure("No element found.");
+};
 
 /* Client code */
 const returnSquaredIfFoundEven_v1 = (a: number[]): number => {
@@ -20,6 +26,16 @@ const returnSquaredIfFoundEven_v1 = (a: number[]): number => {
     }
 }
 
-export const returnSquaredIfFoundEven_v2 = (a: number[]): Result<number> => undefined as any;
-export const returnSquaredIfFoundEven_v3 = (a: number[]): number => undefined as any;
+/* Question 3.2 */
+export const returnSquaredIfFoundEven_v2 = (a: number[]): Result<number> => {
+    // YA - looking for the first even element in the array be findResult func
+    // if exsit return Result with x * x, else - continue with the fail msg
+    return bind(findResult(x => x % 2 === 0, a), (x: number) => makeOk(x * x));
+};
 
+/* Question 3.3 */
+export const returnSquaredIfFoundEven_v3 = (a: number[]): number => {
+    // YA - take the number out of the Result "wrap" using the above func for find the even number
+    // success - return x,  fail - return -1
+    return either(returnSquaredIfFoundEven_v2(a), (x: number) => x, (message: string) => -1);
+};
