@@ -4,11 +4,24 @@ const stringToArray = R.split("");
 
 /* Question 2.1 */
 const vowels: string[] = ['a', 'e', 'i', 'o', 'u'];
-export const countVowels: (s: string) => number = undefined as any;;
+
+export const countVowels = (s: string): number => {
+    // YA- convert to lowercase to match the vowels array, filter and count
+    return stringToArray(s.toLowerCase()) // YA - using the func above 
+        .filter(char => vowels.includes(char))
+        .length;
+};
 
 /* Question 2.2 */
-export const isPalindrome = (text: string): boolean => undefined as any;;
-  
+export const isPalindrome = (text: string): boolean => {
+    // YA- remove everything that is NOT a letter or a number (using [^a-z0-9])
+    // and convert to lowercase.
+    const cleanText = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const charArray = stringToArray(cleanText);
+    
+    // YA- compare original array with reversed array
+    return R.equals(charArray, R.reverse(charArray));
+};
 
 /* Question 2.3 */
 export type WordTree = {
@@ -16,4 +29,7 @@ export type WordTree = {
     children: WordTree[];
 }
 
-export const treeToSentence = (t: WordTree): string => undefined as any;;
+export const treeToSentence = (t: WordTree): string => {
+    // YA- recursive func - get current root and join it with children sentences
+    return [t.root, ...t.children.map(treeToSentence)].join(' ');
+};
