@@ -14,13 +14,15 @@ export const countVowels = (s: string): number => {
 
 /* Question 2.2 */
 export const isPalindrome = (text: string): boolean => {
-    // YA- remove everything that is NOT a letter or a number (using [^a-z0-9])
-    // and convert to lowercase.
+    // YA- clean the string and keep only numbers and chars
     const cleanText = text.toLowerCase().replace(/[^a-z0-9]/g, '');
     const charArray = stringToArray(cleanText);
     
-    // YA- compare original array with reversed array
-    return R.equals(charArray, R.reverse(charArray));
+    // YA- create reversed array using reduceRight 
+    const reversedArray = charArray.reduceRight((acc: string[], char: string) => [...acc, char], []);
+    
+    // YA- compare the two arrays for equality
+    return R.equals(charArray, reversedArray);
 };
 
 /* Question 2.3 */
@@ -31,5 +33,5 @@ export type WordTree = {
 
 export const treeToSentence = (t: WordTree): string => {
     // YA- recursive func - get current root and join it with children sentences
-    return [t.root, ...t.children.map(treeToSentence)].join(' ');
+    return [t.root, ...t.children.map(treeToSentence)].join(' ').trim();
 };
